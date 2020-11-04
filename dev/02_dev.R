@@ -16,11 +16,20 @@
 ## Dependencies ----
 ## Add one line by package you want to add as dependency
 usethis::use_package( "thinkr" )
+usethis::use_package( "shinyWidgets" )
+usethis::use_package( "data.table" )
+usethis::use_package( "DT" )
+usethis::use_package( "tidyverse", type = "depends")
+usethis::use_package( "shinymanager" )
 
 ## Add modules ----
 ## Create a module infrastructure in R/
-golem::add_module( name = "name_of_module1" ) # Name of the module
-golem::add_module( name = "name_of_module2" ) # Name of the module
+golem::add_module( name = "datatable" ) # datatable
+golem::add_module( name = "plot.table" ) # datatable
+
+golem::add_module( name = "Home" ) # Home
+golem::add_module( name = "admin" ) # Admin
+golem::add_module( name = "admin" ) # User
 
 ## Add helper functions ----
 ## Creates ftc_* and utils_*
@@ -35,7 +44,7 @@ golem::add_css_file( "custom" )
 
 ## Add internal datasets ----
 ## If you have data in your package
-usethis::use_data_raw( name = "my_dataset", open = FALSE ) 
+usethis::use_data_raw( name = "data", open = FALSE ) 
 
 ## Tests ----
 ## Add one line by test you want to create
