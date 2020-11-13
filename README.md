@@ -1,4 +1,4 @@
-# Vanishing Light Boos Spreadsheet
+# Vanishing Light Boost Spreadsheet
 
 ## To do
 
