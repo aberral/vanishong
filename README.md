@@ -8,7 +8,7 @@
 - [ ] More than 3 players selected (minimun required for a M+ run). Shinyalert
 - [ ] Add button to select label run. Either M+ or Raid.
 - [X] Add users and SQL database.
-- [ ] Change design. Two tabs per user. Personal Gold / Team Gold. 
-             {name}  {totalgold}
-      {run1} {label} {gold}
-      {run2} {label} {gold} 
+- [ ] Change design. Two tabs per user. Personal Gold / Team Gold.  
+             {name}  {totalgold}  
+      {run1} {label} {gold}  
+      {run2} {label} {gold}  
