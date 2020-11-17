@@ -3,10 +3,9 @@
 ## To do
 - [ ] Session cookies for shinymanager.
 - [ ] Arreglar problema columnas superlargas.
-- [ ] Revisar si el sum funciona.
-
 
 ## Done
+- [X] Revisar si el sum funciona.
 - [X] Input gold > players selected and divisible. Shinyalert
 - [X] Revisar porque peta google al hacer dos veces un input. Corregido.
 - [X] Sustituir el pop-up de carga por el bonito.
