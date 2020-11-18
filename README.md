@@ -2,12 +2,12 @@
 
 ## To do
 - [ ] Session cookies for shinymanager.
-- [ ] Arreglar problema columnas superlargas.
+- [ ] Revisar porque peta google al hacer dos veces un input.
 
 ## Done
+- [X] Arreglar problema columnas superlargas.
 - [X] Revisar si el sum funciona.
 - [X] Input gold > players selected and divisible. Shinyalert
-- [X] Revisar porque peta google al hacer dos veces un input. Corregido.
 - [X] Sustituir el pop-up de carga por el bonito.
 - [X] Add button to select label run. Either M+ or Raid.
 - [X] Add users and SQL database.
