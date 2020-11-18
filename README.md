@@ -3,6 +3,8 @@
 ## To do
 - [ ] Session cookies for shinymanager.
 - [ ] Revisar porque peta google al hacer dos veces un input.
+- [ ] Filtrado columnas.
+- [ ] Ver todo sin ser user.
 
 ## Done
 - [X] Arreglar problema columnas superlargas.
