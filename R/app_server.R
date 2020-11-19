@@ -7,77 +7,55 @@
 app_server <- function( input, output, session ) {
     res_auth <- shinymanager::secure_server(
         check_credentials = shinymanager::check_credentials(
-            data.frame(
-                user = c("nysa", "admin", "pleb"), # mandatory
-                password = c("nysa", "cucharilla", "deptus"), # mandatory
-                admin = c(TRUE, FALSE, FALSE),
-                stringsAsFactors = FALSE
-            )
-        )
+          "database.sqlite")
     )
     output$auth_output <- renderPrint({
         reactiveValuesToList(res_auth)
     })
-    
+    # browser()
     output$ui <- renderUI({
-        if(res_auth$user == 'nysa' | res_auth$user == 'admin') {
+        if(res_auth$user == 'Superuser' | res_auth$user == 'Admin') {
             return(
                 tagList(
                     # Sidebar Layout
                     sidebarLayout(
                         # Sidebar panel for inputs
                         sidebarPanel(
-                            # Input: Select the roster
-                            tags$div(align = 'left', 
-                                     class = 'multicol',
-                                     style = 'column-count:3',
-                                     checkboxGroupInput(inputId = "checkGroup",
-                                                        inline = T,
-                                                        label = "Select the boost members", 
-                                                        choices = c('Aales','Aegui',
-                                                                    'Ainhae','Akroggy',
-                                                                    'Aristocrat','Ark',
-                                                                    'Byakura','Cordu',
-                                                                    'Cripy','Dalaris',
-                                                                    'Dardragon','Deathroll',
-                                                                    'Derser','Destiny',
-                                                                    'Dethwatcher','Distur',
-                                                                    'Epar','Erish',
-                                                                    'Gaude','Griindhouse',
-                                                                    'Gulraz','Jose Trix',
-                                                                    'Kala','Kaz',
-                                                                    'Leiro','Lixie',
-                                                                    'Lowy','Lyon90',
-                                                                    'Mandarinas','Mugatsu',
-                                                                    'Must','Niebli',
-                                                                    'Nooj','Nuks',
-                                                                    'Nysadra','Osura',
-                                                                    'Phsyquic','Riddya',
-                                                                    'Ryxh','Sazed',
-                                                                    'Scizor','Shamesh',
-                                                                    'Shareya','Shiphidos',
-                                                                    'Sigi','Strought',
-                                                                    'Supare','Swarley',
-                                                                    'Tanatos','Tirillas',
-                                                                    'Trancaman','Trolemaga',
-                                                                    'Ursox','Virulenta',
-                                                                    'Voodoomed','Wonder'),
-                                                        selected = "")),
-                            # textAreaInput(inputId = "roster", 
-                            #               label   = "Paste the roster split by ',':",
-                            #               value   = "Osura,Nysadra,Boiga"),
-                            # Input: Paste the amount of gold
-                            numericInput(inputId = "gold", 
-                                         label   = "Paste the gold amount:",
-                                         value   = ""),
-                            # Include clarifying text ----
-                            helpText("Note: please only upload the data once.",
-                                     "Duplicated data may cause errors."),
-                            # Action Button to add the DATA
-                            actionButton("update", "Update Data")
+                          # Input: Select the roster
+                           checkboxGroupInput(inputId = "checkGroup",
+                                              inline = T,
+                                              label = "Select the boost members", 
+                                              choices = c('Aales', 'Aegui', 'Ainhae', 'Akroggy',
+                                                          'Aristocrat', 'Ark', 'Arkanoy', 'Bobulol', 'Bogate', 'Byakura',
+                                                          'Cordu', 'Cripy', 'Dalaris', 'Dardragon', 'Deathroll', 'Derser',
+                                                          'Destiny', 'Dethwatcher', 'Distur', 'Epar', 'Erish', 'Gaude',
+                                                          'Griindhouse', 'Gulraz', 'Ibufropeno', 'JoseTrix', 'Kala',
+                                                          'Katty', 'Kaz', 'Kenrayo', 'Leiro', 'Lixie', 'Loliripe', 'Lowy',
+                                                          'Lyon90', 'Mandarinas', 'Meryna', 'Mugatsu', 'Nai', 'Niebli',
+                                                          'Nooj', 'Notnethber', 'Nuks', 'Nysadra', 'Osura', 'Palomero',
+                                                          'Paracetelamo', 'Phsyquic', 'Ryxh', 'Sazed', 'Scizor', 'Shamesh',
+                                                          'Shiphidos', 'Supare', 'Swarley', 'Tanatos', 'Tirillas', 'Trolemaga',
+                                                          'Ursox', 'Virulenta', 'Voodoomed', 'Wonder', 'Zektuk', 'Ñacañuqui'),
+                                              selected = ""),
+                           # Input: Paste the amount of gold
+                           numericInput(inputId = "gold", 
+                                        label   = "Paste the gold amount:",
+                                        value   = ""),
+                           # Include clarifying label ----
+                           textInput(inputId = "label", 
+                                     label   = "Enter a suitable label:",
+                                     value   = ""),
+                           # Include clarifying text ----
+                           helpText("Note: please only upload the data once.",
+                                    "Duplicated data may cause errors."),
+                           # Action Button to add the DATA
+                           div(style = "display:inline-block;width:100%;text-align: center;",
+                             actionButton("update", "Update Data"),
+                             actionButton("reset", "Reset"),
+                             actionButton("show", "Show data")
+                           )
                         ),
                         mainPanel(
-                            # Output: Header + table of distribution ----
                             mod_plot_ui("plot_ui_1"),
                             mod_datatable_ui("datatable_ui_1"),
                             # actionButton("browser", "browser"),
@@ -86,37 +64,86 @@ app_server <- function( input, output, session ) {
                     )
                 )
             )
-        } else if(res_auth$user == 'pleb') {
+        } else {
             return(
                 tagList(
                     mainPanel(
-                        # Output: Header + table of distribution ----
-                        mod_plot_ui("plot_ui_1"),
-                        actionButton("browser", "browser"),
-                        tags$script("$('#browser').hide();")
+                        mod_plot.table_ui("plot.table_ui_1")
+                        # actionButton("browser", "browser"),
+                        # tags$script("$('#browser').hide();")
                     )
                 )
             )
         }
     })
   # List the first level callModules here
+    observeEvent(input$show,{
+      shinyalert::shinyalert("Loading data. Please wait!.",
+                             type = "info", 
+                             closeOnEsc = F,
+                             showConfirmButton = F,
+                             html = F
+      )
+      callModule(mod_plot_server, "plot_ui_1")
+      shinyalert::closeAlert()
+      })
+    observeEvent(input$reset,{
+      updateCheckboxGroupInput(inputId = "checkGroup",
+                               session = session,
+                               inline = T,
+                               label = "Select the boost members", 
+                               choices = c('Aales', 'Aegui', 'Ainhae', 'Akroggy',
+                                           'Aristocrat', 'Ark', 'Arkanoy', 'Bobulol', 'Bogate', 'Byakura',
+                                           'Cordu', 'Cripy', 'Dalaris', 'Dardragon', 'Deathroll', 'Derser',
+                                           'Destiny', 'Dethwatcher', 'Distur', 'Epar', 'Erish', 'Gaude',
+                                           'Griindhouse', 'Gulraz', 'Ibufropeno', 'JoseTrix', 'Kala',
+                                           'Katty', 'Kaz', 'Kenrayo', 'Leiro', 'Lixie', 'Loliripe', 'Lowy',
+                                           'Lyon90', 'Mandarinas', 'Meryna', 'Mugatsu', 'Nai', 'Niebli',
+                                           'Nooj', 'Notnethber', 'Nuks', 'Nysadra', 'Osura', 'Palomero',
+                                           'Paracetelamo', 'Phsyquic', 'Ryxh', 'Sazed', 'Scizor', 'Shamesh',
+                                           'Shiphidos', 'Supare', 'Swarley', 'Tanatos', 'Tirillas', 'Trolemaga',
+                                           'Ursox', 'Virulenta', 'Voodoomed', 'Wonder', 'Zektuk', 'Ñacañuqui'),
+                               selected = "")
+    })
     # Update data with selection
     # Save changes
-    callModule(mod_plot_server, "plot_ui_1")
-    # Module to save changes
     observeEvent(input$update,{
-        req(input$gold)
-        req(input$checkGroup)
-        gold    <- input$gold
-        members <- input$checkGroup
-        callModule(mod_datatable_server, "datatable_ui_1", gold, members)
-        callModule(mod_plot_server, "plot_ui_1")
+      req(input$gold)
+      req(input$checkGroup)
+      gold <- input$gold
+
     })
-    # Browser to check things
-    # observeEvent(input$browser,{
-    #     browser()
-    # })
-    # callModule(mod_Home_server, "Home_ui_1")
-    # callModule(mod_admin_server, "admin_ui_1")
-    # callModule(mod_user_server, "user_ui_1")
+    observeEvent(res_auth$user, {
+      # browser()
+      if(res_auth$user == 'Superuser' | res_auth$user == 'Admin') {
+        observeEvent(input$update,{
+          req(input$gold)
+          req(input$checkGroup)
+          req(input$label)
+          gold    <- input$gold
+          members <- input$checkGroup
+          label <- input$label
+          if (gold < (length(members) + 2)) {
+            shinyalert::shinyalert("Invalid gold amount!. Gold must be at least equal to number of members selected plus 2.",
+                                   type = "warning", 
+                                   closeOnEsc = F,
+                                   showConfirmButton = T,
+                                   html = F
+            )
+          } else{
+            shinyalert::shinyalert("Uploading and updating data. Please wait!.",
+                                   type = "info", 
+                                   closeOnEsc = F,
+                                   showConfirmButton = F,
+                                   html = F
+            )
+            callModule(mod_datatable_server, "datatable_ui_1", gold, members, label)
+            callModule(mod_plot_server, "plot_ui_1")
+            shinyalert::closeAlert()
+          }
+        })
+      } else {
+        callModule(mod_plot.table_server, "plot.table_ui_1", res_auth$user)
+      }      
+    })
 }

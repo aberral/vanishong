@@ -1,3 +1,12 @@
 .Rhistory
 .RData
 .Rproj.user
+/rsconnect/
+.dcf
+inst/doc
+/vignettes/
+.httr-oauth
+.secrets
+Dockerfile
+.Rbuildignore
+.directory

@@ -10,25 +10,18 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Main structure
     fluidPage(
+      shinyalert::useShinyalert(),
       # App title
       titlePanel(
         div(
           HTML('
-          <div class="row" style="background-color:#EAEAEA; border-radius:15px; display:flex; justify-content: left; margin: 20px">
-            <div class="column" style="margin:20px"><img src="www/golotipo.png" height="auto"></div>
-            <div class="column" style="margin-top:40px; font-size: 60px; font:Source Sans Pro; color:#656668"><b>&nbsp Vanishing: Light Boost Data</b></div>
+          <div class="row" style="background-color:#656668; border-radius:15px; display:flex; justify-content: left; margin: 20px">
+            <div class="column" style="margin:20px"><img src="www/golotipo.png" height="130px"></div>
+            <div class="column" style="margin-top:40px; font-size: 60px; font:Source Sans Pro; color:#EAEAEA"><b>&nbsp Vanishing: Light Boost Data</b></div>
           </div>
                ')
           )
       ),
-      # titlePanel(
-      #   HTML(
-      #   "<div class='parent'>
-      #     <div class='child inline-block-child'><b>Vanishing Light Boost Data</b></div>
-      #     <div class='child inline-block-child'>"tags$img(src = 'www/golotipo.png', align = 'left')"</div>
-      #     </div>"
-      #     )
-      #   ),
       uiOutput("ui")
     ))
 }
@@ -46,21 +39,31 @@ golem_add_external_resources <- function(){
     'www', app_sys('app/www')
   )
   tags$head(
-    # tags$link(rel = "shortcut icon", href = "www/golotipo.png"),
-    tags$style(HTML(
-    ".checkbox-inline { 
-                    margin-left: 0px;
-                    margin-right: 10px;
-          }
-     .checkbox-inline+.checkbox-inline {
-                    margin-left: 0px;
-                    margin-right: 10px;
-          }
+    tags$link(rel = "icon", href = "golotipo.png"),
+    tags$style(HTML("
+    .shiny-options-group 
+    {
+      -webkit-column-count: 3; /* Chrome, Safari, Opera /
+      -moz-column-count: 3;    / Firefox */
+      column-count: 3;
+      -moz-column-fill: balanced;
+      -column-fill: balanced;
+    }
+    .checkbox-inline+.checkbox-inline, .radio-inline+.radio-inline 
+    {
+      margin-left: unset;
+    }
+    .checkbox-inline 
+    { 
+      margin-left: 0px;
+      width: 100%;
+      margin-right: 20px;
+    }
         ")),
-    favicon("golotipo.ico"),
+    favicon(),
     bundle_resources(
       path = app_sys('app/www'),
-      app_title = 'vanishong'
+      app_title = 'VLBoost'
     )
     # Add here other external resources
     # for example, you can add shinyalert::useShinyalert() 
